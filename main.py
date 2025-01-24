@@ -1,4 +1,7 @@
 import flet as ft
+from views.playGame import playContent
+from views.settinsGame import settinsContent
+
 
 def main(page: ft.Page):
     page.title = "XLauncher"
@@ -15,10 +18,9 @@ def main(page: ft.Page):
             style=ft.ButtonStyle(
                 color={"selected": "#30496b", "": "#32568a"}
                 ),
-            
         )
         return b
-
+    
     button_play = buttons("PLAY_CIRCLE_FILL_OUTLINED")
     button_settins = buttons("SETTINGS")
     button_folder = buttons("FOLDER_OPEN")
@@ -36,12 +38,14 @@ def main(page: ft.Page):
         width=80,
         bgcolor="#1d1e40",
         alignment=ft.alignment.center,
+        
     )
 
     page.add(
         ft.Row(
             [
-                nab
+                nab,
+                settinsContent
             ],
         )
     )
