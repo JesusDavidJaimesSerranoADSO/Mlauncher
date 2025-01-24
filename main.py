@@ -45,7 +45,7 @@ def main(page: ft.Page):
         ft.Row(
             [
                 nab,
-                settinsContent
+                playContent
             ],
         )
     )
