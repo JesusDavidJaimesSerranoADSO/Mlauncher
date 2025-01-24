@@ -1,13 +1,23 @@
+from typing import List
 import flet as ft
-from time import sleep
+from controlles.gameOptions import selectionVersion
+
+def escogiendoTipo(e):
+    ap=[]
+    typeVersion = selectionVersion(e.data)
+    if type(typeVersion) == list():
+        for i in typeVersion:
+            ap.append(ft.dropdown.Option(i))
+        optionVersion.options.append(ap)
+   
 
 typeVersion = ft.Dropdown(
     label="escoja tipo de versoin",
-    #on_change=dropdown_changed,
+    on_change=escogiendoTipo,
     options=[
-        ft.dropdown.Option("Red"),
-        ft.dropdown.Option("Green"),
-        ft.dropdown.Option("Blue"),
+        ft.dropdown.Option("Vanilla"),
+        ft.dropdown.Option("Forge"),
+        ft.dropdown.Option("Fabric"),
     ],
     width=300,
     bgcolor="#f7f5f5",
@@ -15,11 +25,6 @@ typeVersion = ft.Dropdown(
 
 optionVersion = ft.Dropdown(
     label="escoja la versoin",
-    options=[
-        ft.dropdown.Option("Red"),
-        ft.dropdown.Option("Green"),
-        ft.dropdown.Option("Blue"),
-    ],
     width=300,
     bgcolor="#f7f5f5",
 )

@@ -1,10 +1,9 @@
 import flet as ft
 from views.playGame import playContent
-from views.settinsGame import settinsContent
-
+from views.settinsGame import settinsContent, acept
 
 def main(page: ft.Page):
-    page.title = "XLauncher"
+    page.title = "XLauncher",
     page.window.width = 800
     page.window.height = 600
     page.window.resizable = False
@@ -45,7 +44,7 @@ def main(page: ft.Page):
         ft.Row(
             [
                 nab,
-                playContent
+                settinsContent
             ],
         )
     )
