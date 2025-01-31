@@ -1,52 +1,78 @@
 import flet as ft
-from views.playGame import playContent
-from views.settinsGame import settinsContent, acept
+import os
+from views.playGame import playContent, selectedVersion, selectedName, runPlay
+from views.settinsGame import settinsContent, optionVersion, typeVersion, runProces, progresBar
+from views.Buttons import nab, button_play, button_settins, button_folder
+from controlles.gameOptions import MINECRAFT_DIRECTORY,selectionVersion, installedList, runMinecraft, valoreNulos, installedVersion,installVersion
 
 def main(page: ft.Page):
+
+    def openPlay(e):
+        listaVersiones()
+        page.remove_at(0) if page.controls != [] else False
+        indexar(playContent)
+
+    def opensettins(e):
+        optionVersion.options=[]
+        typeVersion.options=[]
+        page.remove_at(0) if page.controls != [] else False
+        indexar(settinsContent)
+
+    def openFolder(e):
+        os.startfile(MINECRAFT_DIRECTORY)
+
+    def listaVersiones():
+        selectedVersion.options = []
+        for i in installedList():
+            selectedVersion.options.append(ft.dropdown.Option(i))
+           
+    def iniciarJuego(e):
+        userName = selectedName.value
+        version = selectedVersion.value
+        runMinecraft(version, userName)
+
+    def escogiendoTipo(e):
+        optionVersion.options=[]
+        typeVersion = selectionVersion(e.data)
+        if isinstance(typeVersion, list):
+            for i in typeVersion:
+                optionVersion.options.append(ft.dropdown.Option(i))   
+            page.update()
+    
+    def instalarVersion(e):
+        if valoreNulos(optionVersion.value):
+            if installedVersion(optionVersion.value):
+                progresBar.value = "instalando..."
+                page.update()
+                progresBar.value = installVersion(optionVersion.value, typeVersion.value)
+                page.update()
+            else: 
+                progresBar.value = "version ya existente"
+                page.update()
+
+    def indexar(paguinaPrincipal):
+        page.add(
+            ft.Row(
+                [
+                    nab,
+                    paguinaPrincipal
+                ],
+            )
+        )
+
     page.title = "XLauncher",
     page.window.width = 800
     page.window.height = 600
     page.window.resizable = False
     page.window.maximizable = False
+    runPlay.on_click=iniciarJuego
+    typeVersion.on_change=escogiendoTipo
+    button_play.on_click=openPlay
+    button_settins.on_click=opensettins
+    runProces.on_click = instalarVersion
+    button_folder.on_click=openFolder
+    listaVersiones()
 
-    def buttons(icono: ft.Icons):
-        b = ft.IconButton(
-            icon=icono,
-            icon_size=40,
-            selected=False,
-            style=ft.ButtonStyle(
-                color={"selected": "#30496b", "": "#32568a"}
-                ),
-        )
-        return b
+    indexar(playContent)
     
-    button_play = buttons("PLAY_CIRCLE_FILL_OUTLINED")
-    button_settins = buttons("SETTINGS")
-    button_folder = buttons("FOLDER_OPEN")
-
-    nab = ft.Container(
-        content=ft.Column(
-            controls=[button_play, button_settins,button_folder],
-            alignment=ft.MainAxisAlignment.SPACE_EVENLY,
-            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-        ),
-
-        margin=-10,
-        padding=0,
-        height=600,
-        width=80,
-        bgcolor="#1d1e40",
-        alignment=ft.alignment.center,
-        
-    )
-
-    page.add(
-        ft.Row(
-            [
-                nab,
-                settinsContent
-            ],
-        )
-    )
-
 ft.app(main)
