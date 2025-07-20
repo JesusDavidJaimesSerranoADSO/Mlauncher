@@ -14,16 +14,15 @@ def buttons(icono: ft.Icons):
     
 button_play = buttons("PLAY_CIRCLE_FILL_OUTLINED")
 #button_play.on_click=openPlay
-button_settins = buttons("SETTINGS")
+button_settings = buttons("SETTINGS")
 #button_settins.on_click=opensettins
 button_folder = buttons("FOLDER_OPEN")
 #button_folder.on_click=openFolder
 
 nab = ft.Container(
     content=ft.Column(
-        controls=[button_play, button_settins,button_folder],
+        controls=[button_play, button_settings,button_folder],
         alignment=ft.MainAxisAlignment.SPACE_EVENLY,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
     ),
 
     margin=-10,
